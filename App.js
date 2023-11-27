@@ -1,11 +1,22 @@
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View,ScrollView } from 'react-native';
 import Register from './src/screens/Auth/Register';
+import { NativeScreenNavigationContainer } from 'react-native-screens';
+
+
+
+
+
+
+
+
+
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Register />
-    </View>
+    </ScrollView>
   );
 }
 

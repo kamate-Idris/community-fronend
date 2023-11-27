@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
+
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -12,7 +13,8 @@ const Register = () => {
   })
   const [isChecked, setIsChecked] = useState(false)
   const [showGenderMenu, setShowGenderMenu] = useState(false)
-  const [selectedGender , setSelectedGender] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [selectedGender, setSelectedGender] = useState('')
 
 
 
@@ -39,11 +41,15 @@ const Register = () => {
   }
 
   handleShowMenu = () => {
-    setShowGenderMenu( show => !show)
+    setShowGenderMenu(show => !show)
   }
   handleSelectedGender = (gender) => {
     setSelectedGender(gender)
     setShowGenderMenu(false)
+  }
+
+  handleShowPassword = () => {
+    setShowPassword(password => !password)
   }
 
 
@@ -56,10 +62,10 @@ const Register = () => {
 
   return (
     <View style={styles.register}>
-      <Text style={styles.title}>Creer un compte</Text>
+      <Text style={styles.title}>Créer un compte</Text>
       <View style={styles.inputsArea}  >
         <TextInput placeholderTextColor={colors.grey} cursorColor={cursorColor} placeholder='Entrer votre nom' style={[styles.input]} />
-        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorColor} placeholder='Entrer votre prenom' style={[styles.input]} />
+        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorColor} placeholder='Entrer votre prénom' style={[styles.input]} />
         {/* Button to select gender */}
         <TouchableOpacity onPress={handleShowMenu} activeOpacity={1} cursorColor={cursorColor} placeholder='Entrer votre genre' style={[styles.input, styles.dropdown]} >
           <Text style={[styles.genderText, selectedGender && styles.genderSelected]}>{selectedGender ? selectedGender : "Selectionnez votre genre genre"}</Text>
@@ -79,6 +85,14 @@ const Register = () => {
 
         <TextInput placeholderTextColor={colors.grey} keyboardType='numeric' cursorColor={cursorColor} placeholder='Entrer votre age' style={styles.input} />
         <TextInput placeholderTextColor={colors.grey} cursorColor={cursorColor} placeholder='Entrer votre email' style={styles.input} />
+        <TextInput placeholderTextColor={colors.grey} secureTextEntry={showPassword} cursorColor={cursorColor} placeholder='Entrer un mot de passe' style={styles.input} />
+        {/* Show password if eye clicked */}
+        <View style={styles.eye}>
+          {showPassword ?
+            <Feather onPress={handleShowPassword} name="eye-off" size={24} color="black" /> :
+            <Feather onPress={handleShowPassword} name="eye" size={24} color="black" />}
+        </View>
+        <TextInput placeholderTextColor={colors.grey} secureTextEntry cursorColor={cursorColor} placeholder='Confirmer votre mot de passe' style={styles.input} />
 
         {/* Conditons area */}
         <View style={styles.conditionsView}>
@@ -108,7 +122,8 @@ export default Register
 const styles = StyleSheet.create({
   register: {
     paddingHorizontal: 20,
-    paddingVertical: 60,
+    paddingVertical: 40,
+    paddingBottom: 60
   },
   title: {
     fontSize: 30,
@@ -144,8 +159,8 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
 
-  genderSelected : {
-    color :'#000'
+  genderSelected: {
+    color: '#000'
   },
 
 
@@ -192,7 +207,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     bottom: 30,
     left: 20,
-
   },
   connexionText: {
     color: 'royalblue'
@@ -214,6 +228,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderBottomColor: '#dcdcdc',
     borderBottomWidth: 1
+  },
+  eye: {
+    position: 'absolute',
+    right: 10,
+    top: 405
   }
 
 

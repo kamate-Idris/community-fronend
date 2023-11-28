@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ScrollView, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { AntDesign, Feather } from '@expo/vector-icons';
+import { cursorsColor, btnText, button, inputArea, inputField, mainContainer, mainTitle } from '../../utils/styles';
 
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const [user, setUser] = useState({
     first_name: '',
     last_name: '',
@@ -19,7 +20,7 @@ const Register = () => {
 
 
 
-  const cursorColor = "#000"
+  
   const colors = {
     black: '#000',
     grey: 'grey'
@@ -55,19 +56,16 @@ const Register = () => {
 
 
 
-  /*   const [firstName,setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [gender, setGender] = useState('')
-    const [age, setAge] = useState('') */
+
 
   return (
-    <View style={styles.register}>
-      <Text style={styles.title}>Créer un compte</Text>
-      <View style={styles.inputsArea}  >
-        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorColor} placeholder='Entrer votre nom' style={[styles.input]} />
-        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorColor} placeholder='Entrer votre prénom' style={[styles.input]} />
+    <ScrollView style={mainContainer}>
+      <Text style={mainTitle}>Créer un compte</Text>
+      <View style={inputArea}  >
+        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorsColor} placeholder='Entrer votre nom' style={[inputField]} />
+        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorsColor} placeholder='Entrer votre prénom' style={[inputField]} />
         {/* Button to select gender */}
-        <TouchableOpacity onPress={handleShowMenu} activeOpacity={1} cursorColor={cursorColor} placeholder='Entrer votre genre' style={[styles.input, styles.dropdown]} >
+        <TouchableOpacity onPress={handleShowMenu} activeOpacity={1} cursorColor={cursorsColor} placeholder='Entrer votre genre' style={[inputField, styles.dropdown]} >
           <Text style={[styles.genderText, selectedGender && styles.genderSelected]}>{selectedGender ? selectedGender : "Selectionnez votre genre genre"}</Text>
           <AntDesign name="down" size={20} color="black" />
         </TouchableOpacity>
@@ -83,16 +81,16 @@ const Register = () => {
           </View>
         }
 
-        <TextInput placeholderTextColor={colors.grey} keyboardType='numeric' cursorColor={cursorColor} placeholder='Entrer votre age' style={styles.input} />
-        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorColor} placeholder='Entrer votre email' style={styles.input} />
-        <TextInput placeholderTextColor={colors.grey} secureTextEntry={showPassword} cursorColor={cursorColor} placeholder='Entrer un mot de passe' style={styles.input} />
+        <TextInput placeholderTextColor={colors.grey} keyboardType='numeric' cursorColor={cursorsColor} placeholder='Entrer votre age' style={inputField} />
+        <TextInput placeholderTextColor={colors.grey} cursorColor={cursorsColor} placeholder='Entrer votre email' style={inputField} />
+        <TextInput placeholderTextColor={colors.grey} secureTextEntry={showPassword} cursorColor={cursorsColor} placeholder='Entrer un mot de passe' style={inputField} />
         {/* Show password if eye clicked */}
         <View style={styles.eye}>
           {showPassword ?
             <Feather onPress={handleShowPassword} name="eye-off" size={24} color="black" /> :
             <Feather onPress={handleShowPassword} name="eye" size={24} color="black" />}
         </View>
-        <TextInput placeholderTextColor={colors.grey} secureTextEntry cursorColor={cursorColor} placeholder='Confirmer votre mot de passe' style={styles.input} />
+        <TextInput placeholderTextColor={colors.grey} secureTextEntry cursorColor={cursorsColor} placeholder='Confirmer votre mot de passe' style={inputField} />
 
         {/* Conditons area */}
         <View style={styles.conditionsView}>
@@ -107,46 +105,29 @@ const Register = () => {
       <TouchableOpacity activeOpacity={1}
         disabled={!isChecked}
         onPress={() => console.log("hello")}
-        style={[styles.registerBtn, !isChecked && styles.disabledBtn]}>
-        <Text style={styles.btnText}>S'enregistrer</Text>
+        style={[button, !isChecked && styles.disabledBtn]}>
+        <Text style={btnText}>S'enregistrer</Text>
       </TouchableOpacity>
 
       {/* Link to login page */}
-      <Text style={[styles.goLogin, styles.fontFifteen]}>Avez-vous un compte? <Text style={[styles.connexionText, styles.fontFifteen]}>connectez vous</Text></Text>
-    </View>
+      <Text style={[styles.goLogin, styles.fontFifteen]}>Avez-vous un compte?
+        <Text onPress={() => navigation.navigate('Login')} style={[styles.connexionText, styles.fontFifteen]}>connectez vous</Text>
+      </Text>
+    </ScrollView>
   )
 }
 
 export default Register
 
 const styles = StyleSheet.create({
-  register: {
-    paddingHorizontal: 20,
-    paddingVertical: 40,
-    paddingBottom: 60
-  },
-  title: {
-    fontSize: 30,
-    marginBottom: 30,
-  },
-  inputsArea: {
-    flexDirection: "column",
-    gap: 30,
-  },
+
+ 
   username: {
     flexDirection: "row",
     justifyContent: 'space-between'
   },
 
-  input: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 50,
-    fontSize: 18,
 
-  },
   dropdown: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -189,27 +170,15 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
 
-  registerBtn: {
-    paddingVertical: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: "royalblue",
-    borderRadius: 50,
-    marginVertical: 15
-
-  },
-  btnText: {
-    fontSize: 18,
-    color: "#FFF"
-  },
   goLogin: {
-    position: 'absolute',
+    position: 'relative',
     justifyContent: 'space-between',
-    bottom: 30,
-    left: 20,
+    bottom: 0,
+    left: 0,
   },
   connexionText: {
-    color: 'royalblue'
+    color: 'royalblue',
+
   },
 
   genderMenu: {

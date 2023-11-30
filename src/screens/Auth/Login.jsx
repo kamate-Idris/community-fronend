@@ -11,7 +11,7 @@ const Login = () => {
   const [errors, setErrors] = useState(false)
 
   const handleAuthentication = () => {
-    if(credentials.login === '' || credentials.password === ''){
+    if (credentials.login === '' || credentials.password === '') {
       setErrors(true)
       return
     }
@@ -22,15 +22,16 @@ const Login = () => {
   return (
     <View style={mainContainer}>
       <Text style={mainTitle}>Connectez-vous</Text>
+      {/* Inputs view area */}
       <View style={inputArea}>
         <TextInput
           onChangeText={(e) => setCredentials({ ...credentials, login: e })}
           cursorColor={cursorsColor} placeholder='Entrer votre login (email)' style={inputField} />
-          {errors && !credentials.login && <ValideInput inputName={'login'} />}
+        {errors && !credentials.login && <ValideInput inputName={'login'} />}
         <TextInput
           onChangeText={(e) => setCredentials({ ...credentials, password: e })}
           cursorColor={cursorsColor} secureTextEntry placeholder='Entrer votre mot de passe ' style={inputField} />
-          {errors && !credentials.password && <ValideInput inputName={'mot de passe'} />}
+        {errors && !credentials.password && <ValideInput inputName={'mot de passe'} />}
         <TouchableOpacity onPress={handleAuthentication} style={[button, styles.resizeBtn]}>
           <Text style={btnText}>Se connecter</Text>
         </TouchableOpacity>
@@ -42,9 +43,6 @@ const Login = () => {
 export default Login
 
 const styles = StyleSheet.create({
-  inputsView: {
-
-  },
   resizeBtn: {
     marginTop: 0
   }
